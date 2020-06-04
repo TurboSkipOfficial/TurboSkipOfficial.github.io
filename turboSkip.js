@@ -13,9 +13,11 @@ ele.appendChild(addr)
 var ele2 = document.getElementById("reportInfo");
 var ele3 = document.getElementById("reportArea");	
 var addr2 = document.createElement("div")
-addr2.innerHTML="<span class='rititle'>TurboSkip:</span><span class=''>&nbsp;<button onclick='togSki();'>Toggle</Button>&nbsp;<span id='skipping'>Not Skipping</span></span></span>";
+addr2.innerHTML="<span class='rititle'>100 TurdPoSkip:</span><span class=''>&nbsp;<button onclick='togSki();'>Toggle</Button>&nbsp;<span id='skipping'>Not Skipping</span></span></span>";
 ele2.appendChild(addr2);
-
+addr2 = document.createElement("div")
+addr2.innerHTML="<span class='rititle'>TurdPoLeave:</span><span class=''>&nbsp;<button onclick='loadLeave();'>List all Leavers</Button>";
+ele2.appendChild(addr2);
 
 function getCookie(cname) {
   var name = cname + "=";
@@ -114,5 +116,100 @@ Trial.excludeReport(repid,true,function(){
 	//document.getElementById("toSkipList").value = getCookie("skipped");
 	//massSkip();
 
+function containsIn(ele,arr){
+	for (i=0;i<arr.length;i++){
+		if (ele==arr[i]){
+			return true;
+		}
+	}return false;
+}
+	
+function autoDupe(drid,dp,dr,dd) {
+	//var drid = $('#dupReportID').val();
+	//var dp = $('#dupPlayer').val();
+	//var dr = $('#dupReason').val();
+	//var dd = $('#dupLocation').val();
+	Trial.duplicateReport(drid,dp,dr,dd);
+}	
+
+function processIGNstuff(data,ign) {
+	var players = data.players
+	for ( i=0;i<players.length;i++){
+		console.log(players[i].username);
+		if (players[i].ign==ign) {
+			var ele2 = document.getElementById("reportInfo");
+			var addr2 = document.createElement("div")
+			addr2.className="turdLeav"
+			addr2.innerHTML="<span class='rititle'><button onclick=\"autoDupe('"+ document.getElementsByClassName("reportId")[0].innerHTML+"','"+players[i].username+"',7,'Busted with 100 TurdPoSkip')\">Dupe for Leaving</button></span><span class=''>"+players[i].username+"</span>";
+		ele2.appendChild(addr2);
+			return players[i].username;
+		}
+	}return false;
+}
+
+function getPlayerByIGN(ign) {
+	  $.ajax({
+				type: "POST",
+				url: "./loadingStages.php",
+				data: { step: 3, input: document.getElementsByClassName("reportId")[0].innerHTML },
+				dataType: "JSON",
+				timeout: 10000,
+				success: function(data){
+					if(data !== false){
+						return processIGNstuff(data,ign)
+					}else{
+						Modal.open("There was an error loading the report. Please refresh or try again later.");
+					}
+				},
+				error: function(x, t, m){
+					Modal.open("There was an error loading the report. Please refresh or try again later.");
+				}
+			});
+}
+
+function loadLeave(){
+	var content = document.getElementById("reportContent").children;
+	console.log("Displaying Leavers")
+	var existing = document.getElementsByClassName('turdLeav');
+	
+	for (i=0;i<existing.length;i++){
+		existing[i].remove();
+	}
+	var dead = [];
+	var leavers = [];
+	for (i=0;i<content.length;i++) {
+		if (content[i].className.indexOf('notice')>=0) {
+			var str = content[i].innerHTML
+			var pos = str.indexOf(" has left the game.");
+			if (pos >= 0) {
+				str = str.replace(" has left the game.","");
+				if (!dead.includes(str)){
+					console.log(getPlayerByIGN(str));
+				}
+				continue;
+			}
+			pos = str.indexOf(" has been killed.");
+			if (pos >= 0) {
+				str = str.replace(" has been killed.","");
+				console.log("kils")
+				dead.push(str);
+				continue;
+			}
+			pos = str.indexOf(" has been lynched.");
+			if (pos >= 0) {
+				str = str.replace(" has been lynched.","");
+				dead.push(str);
+				continue;
+			}
+		}
+	}
+	  
+  
+
+
+	
+			
+}
+	
 
 window.setTimeout(skipReport,2000);
