@@ -16,7 +16,7 @@ var addr2 = document.createElement("div")
 addr2.innerHTML="<span class='rititle'>100 TurdPoSkip:</span><span class=''>&nbsp;<button onclick='togSki();'>Toggle</Button>&nbsp;<span id='skipping'>Not Skipping</span></span></span>";
 ele2.appendChild(addr2);
 addr2 = document.createElement("div")
-addr2.innerHTML="<span class='rititle'>TurdPoLeave:</span><span class=''>&nbsp;<button onclick='loadLeave();'>List all Leavers</Button>";
+addr2.innerHTML="<span class='rititle'>TurdPoLeave:</span><span class=''>&nbsp;<button onclick='loadLeave();'>List all Leavers</Button><br>Please use this feature at your own risk.  It shouldn't display dead leavers but always check just in case.  100 TurdPoSkip is not liable for TR loss as a result of this feature.";
 ele2.appendChild(addr2);
 
 function getCookie(cname) {
