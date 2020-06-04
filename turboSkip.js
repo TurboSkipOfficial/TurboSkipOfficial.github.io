@@ -55,7 +55,7 @@ document.getElementById("reportIds").innerHTML = document.getElementById("report
 
 for (i=0;i<toskip.length;i++){
 	repid = toskip[i]
-	setCookie("skipped",getCookie("skipped")+ repid + "&",31);
+	//setCookie("skipped",getCookie("skipped")+ repid + "&",31);
 	console.log(repid);
 	document.getElementById("reportIds").innerHTML = document.getElementById("reportIds").innerHTML + "&" + +toskip[i]
 	$.ajax({
@@ -88,7 +88,7 @@ function skipReport(){
 	if (document.getElementById("skipping").innerHTML=="Skipping") {
 repid = document.getElementsByClassName("reportId")[0].innerHTML;
 document.getElementById("reportIds").innerHTML = document.getElementById("reportIds").innerHTML + "&" + repid
-setCookie("skipped",getCookie("skipped")+ repid + "&",31);
+//setCookie("skipped",getCookie("skipped")+ repid + "&",31);
 Trial.excludeReport(repid,true,function(){
 			$('#skipperlink').blur();
 			// reset html values including filter
@@ -111,8 +111,8 @@ Trial.excludeReport(repid,true,function(){
 	} else{
 	window.setTimeout(skipReport,2000);	}
 }
-	document.getElementById("toSkipList").value = getCookie("skipped");
-	massSkip();
+	//document.getElementById("toSkipList").value = getCookie("skipped");
+	//massSkip();
 
 
 window.setTimeout(skipReport,2000);
