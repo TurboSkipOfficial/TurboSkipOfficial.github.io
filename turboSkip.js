@@ -140,7 +140,7 @@ function processIGNstuff(data,ign) {
 			var ele2 = document.getElementById("reportInfo");
 			var addr2 = document.createElement("div")
 			addr2.className="turdLeav"
-			addr2.innerHTML="<span class='rititle'><button onclick=\"autoDupe('"+ document.getElementsByClassName("reportId")[0].innerHTML+"','"+players[i].username+"',7,'Busted with 100 TurdPoSkip')\">Dupe for Leaving</button></span><span class=''>"+players[i].username+"</span>";
+			addr2.innerHTML="<span class='rititle'><button onclick=\"autoDupe('"+ document.getElementsByClassName("reportId")[0].innerHTML+"','"+players[i].username+"',7,'Busted with 100 TurdPoSkip')\">Dupe for Leaving</button></span><span class=''>"+players[i].username+" (" +players[i].ign+")</span>";
 		ele2.appendChild(addr2);
 			return players[i].username;
 		}
